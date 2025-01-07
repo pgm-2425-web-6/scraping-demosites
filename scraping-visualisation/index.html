@@ -1,30 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Bar Chart Visualization</title>
-    <style>
-        body { margin: 0; }
-        canvas { display: block; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <div class="bottom-info-card"></div>
+    <div class="info-card"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         // Data from sanitized_election_results.csv
         const data = [
-            { party: "Party of Regions", candidate: "Vadym Kolesnichenko", votes: 32076, percentage: 43.0 },
-            { party: "KPU", candidate: "Vasyl Parkhomenko", votes: 12100, percentage: 20.3 },
-            { party: "Independent", candidate: "Vasyl Zelenchuk", votes: 8007, percentage: 11.3 },
-            { party: "Independent", candidate: "Mykola Pomohalov", votes: 6680, percentage: 9.5 },
-            { party: "Batkivshchyna", candidate: "Yuliia Pecheneva", votes: 2260, percentage: 3.2 },
-            { party: "UDAR", candidate: "Oleksii Diemienok", votes: 1947, percentage: 2.8 },
-            { party: "Russian Bloc (party)", candidate: "Fedir Vasylchenko", votes: 1444, percentage: 2.0 },
-            { party: "Independent", candidate: "Oleksandr Perminov", votes: 816, percentage: 1.2 },
-            { party: "Independent", candidate: "Oleksandr Khvalkov", votes: 769, percentage: 1.1 },
-            { party: "Ukraine – Forward!", candidate: "Olena Titova", votes: 758, percentage: 1.1 },
-            { party: "Others", candidate: "", votes: 3227, percentage: 4.5 }
+            {
+                "party": "Party of Regions",
+                "candidate": "Vadym Kolesnichenko",
+                "votes": 32076,
+                "percentage": 43.0
+            },
+            {
+                "party": "KPU",
+                "candidate": "Vasyl Parkhomenko",
+                "votes": 12100,
+                "percentage": 20.3
+            },
+            {
+                "party": "Independent",
+                "candidate": "Vasyl Zelenchuk",
+                "votes": 8007,
+                "percentage": 11.3
+            },
+            {
+                "party": "Independent",
+                "candidate": "Mykola Pomohalov",
+                "votes": 6680,
+                "percentage": 9.5
+            },
+            {
+                "party": "Batkivshchyna",
+                "candidate": "Yuliia Pecheneva",
+                "votes": 2260,
+                "percentage": 3.2
+            },
+            {
+                "party": "UDAR",
+                "candidate": "Oleksii Diemienok",
+                "votes": 1947,
+                "percentage": 2.8
+            },
+            {
+                "party": "Russian Bloc (party)",
+                "candidate": "Fedir Vasylchenko",
+                "votes": 1444,
+                "percentage": 2.0
+            },
+            {
+                "party": "Independent",
+                "candidate": "Oleksandr Perminov",
+                "votes": 816,
+                "percentage": 1.2
+            },
+            {
+                "party": "Independent",
+                "candidate": "Oleksandr Khvalkov",
+                "votes": 769,
+                "percentage": 1.1
+            },
+            {
+                "party": "Ukraine – Forward!",
+                "candidate": "Olena Titova",
+                "votes": 758,
+                "percentage": 1.1
+            },
+            {
+                "party": "Others",
+                "candidate": "No candidate",
+                "votes": 3227,
+                "percentage": 4.5
+            }
         ];
 
         // Set up the scene, camera, and renderer
@@ -59,13 +115,7 @@
         camera.position.z = 20;
 
         // Create info card
-        const infoCard = document.createElement('div');
-        infoCard.style.position = 'absolute';
-        infoCard.style.backgroundColor = 'white';
-        infoCard.style.padding = '10px';
-        infoCard.style.border = '1px solid black';
-        infoCard.style.display = 'none';
-        document.body.appendChild(infoCard);
+
 
         // Animation loop
         function animate() {
@@ -84,13 +134,13 @@
             const intersects = raycaster.intersectObjects(bars);
 
             if (intersects.length > 0) {
-            const intersected = intersects[0].object;
-            infoCard.style.left = `${event.clientX + 10}px`;
-            infoCard.style.top = `${event.clientY + 10}px`;
-            infoCard.innerHTML = `Candidate: ${intersected.userData.candidate}<br>Votes: ${intersected.userData.votes}<br>Percentage: ${intersected.userData.percentage}%`;
-            infoCard.style.display = 'block';
+                const intersected = intersects[0].object;
+                infoCard.style.left = `${event.clientX + 10}px`;
+                infoCard.style.top = `${event.clientY + 10}px`;
+                infoCard.innerHTML = `Candidate: ${intersected.userData.candidate}<br>Votes: ${intersected.userData.votes}<br>Percentage: ${intersected.userData.percentage}%`;
+                infoCard.style.display = 'block';
             } else {
-            infoCard.style.display = 'none';
+                infoCard.style.display = 'none';
             }
         });
 
@@ -103,12 +153,14 @@
             const intersects = raycaster.intersectObjects(bars);
 
             if (intersects.length > 0) {
-            const intersected = intersects[0].object;
-            alert(`Candidate: ${intersected.userData.candidate}\nVotes: ${intersected.userData.votes}\nPercentage: ${intersected.userData.percentage}%`);
+                const intersected = intersects[0].object;
+                const bottomInfoCard = document.querySelector('.bottom-info-card');
+                bottomInfoCard.innerHTML = `Candidate: ${intersected.userData.candidate}<br>Votes: ${intersected.userData.votes}<br>Percentage: ${intersected.userData.percentage}%`;
             }
         });
 
 
     </script>
 </body>
+
 </html>
